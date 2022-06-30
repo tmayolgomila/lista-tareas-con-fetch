@@ -1,3 +1,7 @@
+.target{
+    font-family: fantasy;
+}
+
 .whatTodo:hover .deleteButton{
 display:inline
 }
@@ -7,8 +11,15 @@ display:inline
     display: none;
     margin-right: 20px;
 }
+.totalDelete{
+    border: none;
+    margin-right: 20px;
+}
 .fa-trash:before {
     color: rgb(248, 53, 53);
+}
+.fa-brush{
+    color: blue;
 }
 .target{
    text-align: center;
@@ -22,7 +33,7 @@ display:inline
 .todos{
 
     font-size: 60px;
-    font-family: 'Times New Roman', Times, serif;
+    
     margin: auto;
     padding: 10px;
 }
@@ -36,5 +47,6 @@ display:inline
     
 }
 .counter{
+    padding: 5px;
     background-color: rgb(131, 186, 190);
 }
