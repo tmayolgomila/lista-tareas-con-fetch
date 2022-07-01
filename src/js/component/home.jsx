@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from "react";
+import { getApiTask } from "./fetch.jsx";
+import { putApiTask } from "./fetch.jsx";
 
 
 
@@ -12,21 +14,27 @@ const Home = () => {
 
 	const urlApi = 'https://assets.breatheco.de/apis/fake/todos/user/tomeumayol';
 
+	//useEffect(() => {
+		//getTareas();
+	//}, []);
 	useEffect(() => {
-		getTareas();
+		
+		
+		 getApiTask().then(data => 
+
+				setTasks(data));
+		
 	}, []);
+
 	useEffect(() => {
-		borrarTodo();
-	}, []);
-	useEffect(() => {
-		putTareas();
-	}, []);
+		putApiTask(tasks);
+	},);
 	
 
 	
 
 
-	const getTareas = () => {
+	/*const getTareas = () => {
 		fetch(urlApi, {
 			method: "GET",
 			headers: {
@@ -44,7 +52,7 @@ const Home = () => {
 				//manejo de errores
 				console.log(error);
 			});
-	};
+	};*/
 
 	const postTareas = () => {
 		fetch(urlApi, {
@@ -72,7 +80,8 @@ const Home = () => {
 	};
 
 
-		const putTareas = () => {
+		/*const putTareas = () => {
+			
 		fetch(urlApi, {
 			method: "PUT",
 			body: JSON.stringify(tasks),
@@ -91,7 +100,7 @@ const Home = () => {
 				//manejo de errores
 				console.log(error);
 			});
-	};
+	};*/
 	const borrarTodo = () => {
 		fetch(urlApi, {
 			method: "DELETE",
@@ -117,8 +126,8 @@ const Home = () => {
 		event.preventDefault() // cancelamos el evento, si la entrada esta vacia no queremos que entre en la lista de tareas
 		if (input != ""){
 			const addTask = {
-				id: Math.floor(Math.random()*100000), //creamos un id random para cada entrada de la lista
-				text: input
+				label: input, //creamos un id random para cada entrada de la lista
+				done: false
 			}
 			setTasks([...tasks, addTask]) ///(...esto es un spread operator)=>nos permite copiar rápidamente todo un array existente en otro array
 			setInput("") //Aqui dejamos la entrada vacia despues de crear una tarea para poder crear otra
@@ -127,15 +136,15 @@ const Home = () => {
 
 
 	//eliminar tareas
-	const deleteTask =(id) => {
-		let filteredTasks = [...tasks].filter((tasks)=>tasks.id !== id) //.filter para devolver un array nuevo, no borra, creamos uno nuevo con todas las demas tareas que no tienen ese id
+	const deleteTask =(label) => {
+		let filteredTasks = [...tasks].filter((tasks)=>tasks.label !== label) //.filter para devolver un array nuevo, no borra, creamos uno nuevo con todas las demas tareas que no tienen ese label
 		setTasks(filteredTasks); 
 	}
 	console.log(input)
 
 		//eliminar todas las tareas
-		const deleteAllTask =(id) => {
-			let filteredTasks = [...tasks].filter((tasks)=>tasks.id === id && tasks.id !== id) 
+		const deleteAllTask =(label) => {
+			let filteredTasks = [...tasks].filter((tasks)=>tasks.label === label && tasks.label !== label) 
 			setTasks(filteredTasks); 
 		}
 		console.log(input)
@@ -159,9 +168,9 @@ const Home = () => {
 					{tasks.map(task =>(
 					
 					
-					<div className="whatTodo" key={task.id}> {/* le pasamos dentro de la key el elemento con la id, esto nos permite tener cada tarea con una id diferente*/}
+					<div className="whatTodo" key={task.label}> {/* le pasamos dentro de la key el elemento con la label, esto nos permite tener cada tarea con una label diferente*/}
 
-						<p>{task.text}<button className="deleteButton" onClick={() => deleteTask(task.id)}><i className="fa fa-trash fa-lg"></i></button></p></div>
+						<p>{task.label}<button className="deleteButton" onClick={() => deleteTask(task.label)}><i className="fa fa-trash fa-lg"></i></button></p></div>
 						))
 					}
 					<p className="counter">Left tasks {(tasks.length)} </p>
