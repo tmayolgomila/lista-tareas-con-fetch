@@ -14,9 +14,7 @@ const Home = () => {
 
 	const urlApi = 'https://assets.breatheco.de/apis/fake/todos/user/tomeumayol';
 
-	//useEffect(() => {
-		//getTareas();
-	//}, []);
+
 	useEffect(() => {
 		
 		
@@ -24,83 +22,17 @@ const Home = () => {
 
 				setTasks(data));
 		
-	}, []);
+	}, [setTasks]);
 
 	useEffect(() => {
 		putApiTask(tasks);
-	},);
+	},[tasks]);
 	
 
 	
 
 
-	/*const getTareas = () => {
-		fetch(urlApi, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(resp => {
-				return resp.json(); // (regresa una promesa) will try to parse the result as json as return a promise that you can .then for results
-			})
-			.then(data => {
-				//Aquí es donde debe comenzar tu código después de que finalice la búsqueda
-				setTasks(data); //esto imprimirá en la consola el objeto exacto recibido del servidor
-			})
-			.catch(error => {
-				//manejo de errores
-				console.log(error);
-			});
-	};*/
 
-	const postTareas = () => {
-		fetch(urlApi, {
-			method: "POST",
-			body: [],
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(resp => {
-				console.log(resp.ok); // Será true (verdad) si la respuesta es exitosa.
-				//console.log(resp.status); // el código de estado = 200 o código = 400 etc.
-				//console.log(resp.text()); // Intentará devolver el resultado exacto como cadena (string)
-				return resp.json(); // (regresa una promesa) will try to parse the result as json as return a promise that you can .then for results
-			})
-			.then(data => {
-				setTasks(data);
-				//Aquí es donde debe comenzar tu código después de que finalice la búsqueda
-				//console.log(data); //esto imprimirá en la consola el objeto exacto recibido del servidor
-			})
-			.catch(error => {
-				//manejo de errores
-				console.log(error);
-			});
-	};
-
-
-		/*const putTareas = () => {
-			
-		fetch(urlApi, {
-			method: "PUT",
-			body: JSON.stringify(tasks),
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(resp => {
-				return resp.json(); // (regresa una promesa) will try to parse the result as json as return a promise that you can .then for results
-			})
-			.then(data => {
-				//Aquí es donde debe comenzar tu código después de que finalice la búsqueda
-				console.log(data); //esto imprimirá en la consola el objeto exacto recibido del servidor
-			})
-			.catch(error => {
-				//manejo de errores
-				console.log(error);
-			});
-	};*/
 	const borrarTodo = () => {
 		fetch(urlApi, {
 			method: "DELETE",
@@ -109,9 +41,7 @@ const Home = () => {
 			}
 		})
 			.then(resp => {
-				//console.log(resp.ok); // Será true (verdad) si la respuesta es exitosa.
-				//console.log(resp.status); // el código de estado = 200 o código = 400 etc.
-				//console.log(resp.text()); // Intentará devolver el resultado exacto como cadena (string)
+
 				return resp.json(); // (regresa una promesa) will try to parse the result as json as return a promise that you can .then for results
 			})
 			.then(data => getTareas(data))
@@ -136,18 +66,19 @@ const Home = () => {
 
 
 	//eliminar tareas
-	const deleteTask =(label) => {
-		let filteredTasks = [...tasks].filter((tasks)=>tasks.label !== label) //.filter para devolver un array nuevo, no borra, creamos uno nuevo con todas las demas tareas que no tienen ese label
-		setTasks(filteredTasks); 
-	}
-	console.log(input)
+	const deleteTask = (label) => {
+    let filteredTasks = [...tasks].filter((tasks) => tasks.label !== label); //.filter para devolver un array nuevo, no borra, creamos uno nuevo con todas las demas tareas que no tienen ese label
+    setTasks(filteredTasks);
+  };
 
-		//eliminar todas las tareas
-		const deleteAllTask =(label) => {
-			let filteredTasks = [...tasks].filter((tasks)=>tasks.label === label && tasks.label !== label) 
-			setTasks(filteredTasks); 
-		}
-		console.log(input)
+  //eliminar todas las tareas
+  const deleteAllTask = (label) => {
+    let filteredTasks = [...tasks].filter(
+      (tasks) => tasks.label === label && tasks.label !== label
+    );
+    setTasks(filteredTasks);
+  };
+		
 		
 		return (
 			
